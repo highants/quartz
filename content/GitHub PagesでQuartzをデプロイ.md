@@ -13,10 +13,22 @@ author:
 ---
 ## QuartzをGitHub Pagesでデプロイ
 
-こちらのページを参照しました
+こちらの記事にある情報を参考にさせていただきました。
+
+
 [Obsidian + Quartz + Github Page を使ってサイト公開｜devlive](https://note.com/devlive/n/n3250edc2ee8f)
 
-ただ、GiHub Pagesのdeploy.ymlが現バージョンと違っていたので公式からコピペしました。
+
+> Quartz フォルダ内で以下のコマンドを実行して、deploy.yml のファイルを作成します。
+> 
+> ```
+> touch .github/workflows/deploy.yml
+> ```
+
+と、ありますが自分はWindows環境でtouchが使えなかったため、VSCodeで.github/workflows/に直接deploy.ymlを作成しました。
+
+また、記事で紹介されているdeploy.ymlが現バージョンとは異なっており、使用するとエラーでデプロイに失敗してしまうので、公式ページで案内されているdeploy.ymlをコピペしました。
+
 [Hosting](https://quartz.jzhao.xyz/hosting)
 
 ```yaml
