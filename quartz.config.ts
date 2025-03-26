@@ -24,13 +24,13 @@ const config: QuartzConfig = {
       cdnCaching: true,
       typography: {
         header:{
-          name: "Noto Serif JP",
+          name: "BIZ UDPMincho",
           weights: [400, 700],
           includeItalic: true,
         },
         body:{
           name: "Noto Serif JP",
-          weights: [500, 700, 800],
+          weights: [600, 700, 800],
           includeItalic: true,
         },
         code:{
