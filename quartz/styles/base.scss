@@ -18,7 +18,9 @@ section {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
-  font-size: 18px; // フォントサイズを大きく
+  font-size: 17px; // フォントサイズを大きく
+  letter-spacing: 0em; // 文字の間隔を調整
+  font-stretch: normal; // 文字の横幅を広げる（例）
 }
 
 .text-highlight {
@@ -58,6 +60,14 @@ ul,
 .math {
   overflow-wrap: anywhere;
   /* tr and td removed from list of selectors for overflow-wrap, allowing them to use default 'normal' property value */
+}
+
+li{
+  padding-left: 0.1em; // インデントを増やす
+}
+
+ul {
+  padding-left: 3rem; // インデントを増やす
 }
 
 .math {
@@ -124,8 +134,9 @@ a {
 }
 
 .page {
-  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  max-width: calc(#{map.get($breakpoints, desktop)} + 400px); // ボディの幅を狭くする
   margin: 0 auto;
+  
   & article {
     & > h1 {
       font-size: 2rem;
@@ -186,7 +197,7 @@ a {
       gap: 2rem;
       top: 0;
       box-sizing: border-box;
-      padding: $topSpacing 2rem 2rem 2rem;
+      padding: $topSpacing 2rem 5rem 2rem; // サイドバーの左右の余白を広げる
       display: flex;
       height: 100vh;
       position: sticky;
@@ -196,6 +207,8 @@ a {
       z-index: 1;
       grid-area: grid-sidebar-left;
       flex-direction: column;
+      padding-right: 5rem;
+      font-size: 15px;
       @media all and ($mobile) {
         gap: 0;
         align-items: center;
@@ -212,6 +225,8 @@ a {
       grid-area: grid-sidebar-right;
       margin-right: 0;
       flex-direction: column;
+      padding-left: 5rem;
+      font-size: 15px;
       @media all and ($mobile) {
         margin-left: inherit;
         margin-right: inherit;
@@ -475,9 +490,12 @@ code {
 }
 
 tbody,
-li,
 p {
-  line-height: 1.8rem; // 行間を広げる
+  line-height: 1.8rem; // 他のテキストの行間はそのまま
+}
+
+li {
+  line-height: 2.5rem; // リストの行間を広げる
 }
 
 .table-container {
