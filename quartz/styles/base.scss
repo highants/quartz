@@ -18,6 +18,7 @@ section {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
+  font-size: 18px; // フォントサイズを大きく
 }
 
 .text-highlight {
@@ -476,7 +477,7 @@ code {
 tbody,
 li,
 p {
-  line-height: 1.6rem;
+  line-height: 1.8rem; // 行間を広げる
 }
 
 .table-container {
