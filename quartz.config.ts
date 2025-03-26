@@ -30,7 +30,7 @@ const config: QuartzConfig = {
         },
         body:{
           name: "Noto Serif JP",
-          weights: [400, 700],
+          weights: [500, 700, 800],
           includeItalic: true,
         },
         code:{
