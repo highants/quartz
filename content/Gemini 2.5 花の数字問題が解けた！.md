@@ -1,15 +1,16 @@
 ---
-title: Gemini 2.5：花の数字問題
+title: Gemini 2.5 花の数字問題が解けた！
 date: 2025-03-26T18:17:00
-description: Gemini 2.5ｄｗ花の数字問題が解けた
+description: Gemini 2.5で花の数字問題が解けた
 tags:
   - Gemini
+  - LLM出力サンプル
 categories:
-  - AI出力サンプル
+  - LLM出力サンプル
 author:
   - highants
 ---
-## Gemini 2.5：花の数字問題が解けた！
+## Gemini 2.5 花の数字問題が解けた！
 
 今までどのモデルも解法を正しく導き出せなかった問題を、遂にGemini 2.5が解いてくれました。
 問題文だけで答えにはまだたどり着けませんが、正解を与えた上で、正しい解法を導き出すことができたLLMは今回が初めてです。
