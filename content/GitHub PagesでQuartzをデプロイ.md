@@ -1,0 +1,80 @@
+---
+title: QuartzをGitHub Pagesでデプロイ
+date: 2025-03-26T16:08:00
+description: GitHub PagesでQuartzをデプロイする方法
+tags:
+  - Quartz
+  - GitHub
+  - Obsidian
+categories:
+  - マニュアル
+author:
+  - highants
+---
+## QuartzをGitHub Pagesでデプロイ
+
+こちらの記事にある情報を参考にさせていただきました。
+
+
+[Obsidian + Quartz + Github Page を使ってサイト公開｜devlive](https://note.com/devlive/n/n3250edc2ee8f)
+
+
+> Quartz フォルダ内で以下のコマンドを実行して、deploy.yml のファイルを作成します。
+> 
+> ```
+> touch .github/workflows/deploy.yml
+> ```
+
+と、ありますが自分はWindows環境でtouchが使えなかったため、VSCodeで.github/workflows/に直接deploy.ymlを作成しました。
+
+また、記事で紹介されているdeploy.ymlが現バージョンとは異なっており、使用するとエラーでデプロイに失敗してしまうので、公式ページで案内されているdeploy.ymlをコピペしました。
+
+[Hosting](https://quartz.jzhao.xyz/hosting)
+
+```yaml
+name: Deploy Quartz site to GitHub Pages
+ 
+on:
+  push:
+    branches:
+      - v4
+ 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+ 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+ 
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for git info
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Quartz
+        run: npx quartz build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+ 
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
