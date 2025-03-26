@@ -1,6 +1,9 @@
 ---
 title: Welcome to Quartz
+date: 2025-03-26T15:35:00
+tags:
+  - TEST
 ---
+[[リンク1]]
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+[[リンク２]]
