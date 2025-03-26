@@ -11,10 +11,12 @@ author:
 ---
 # 🌱
 
+[[Gemini 2.5 花の数字問題が解けた！]]
+
 [[GitHub PagesでQuartzをデプロイ]]
 
 [[リンク1]]
 
 [[リンク２]]
 
-bluesky🦋: [highants](https://bsky.app/profile/highants.bsky.social)
+**Bluesky 🦋:** [highants](https://bsky.app/profile/highants.bsky.social)
