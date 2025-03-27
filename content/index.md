@@ -15,7 +15,7 @@ author:
 
 [[GitHub PagesでQuartzをデプロイ]]
 
-[[Quartz/content/地球のエネルギー不均衡が記録更新]]
+[[地球のエネルギー不均衡が記録更新]]
 
 [[リンク1]]
 
