@@ -7,7 +7,8 @@ tags:
   - Quartz
   - 実験
 author:
-  - highants
+  - "[[@highants.bsky.social]]"
+editor: highants
 ---
 # 🌱
 

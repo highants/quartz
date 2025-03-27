@@ -9,7 +9,9 @@ tags:
 categories:
   - マニュアル
 author:
-  - highants
+  - "[[@highants.bsky.social]]"
+editor: highants
+fmContentType: quartz
 ---
 ## QuartzをGitHub Pagesでデプロイ
 

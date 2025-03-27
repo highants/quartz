@@ -1,5 +1,5 @@
 ---
-title: Gemini 2.5 花の数字問題が解けた！
+title: Geminiが花の数字問題を解いた！
 date: 2025-03-26T18:17:00
 description: Gemini 2.5で花の数字問題が解けた
 tags:
@@ -8,7 +8,9 @@ tags:
 categories:
   - LLM出力サンプル
 author:
-  - highants
+  - "[[@highants.bsky.social]]"
+editor: highants
+fmContentType: quartz
 ---
 今までどのモデルも解法を正しく導き出せなかった問題を、遂にGemini 2.5が解いてくれました。
 問題文だけで答えにはまだたどり着けませんが、正解を与えた上で、正しい解法を導き出すことができたLLMは今回が初めてです。
