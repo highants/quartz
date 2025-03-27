@@ -11,7 +11,7 @@ author:
 ---
 # 🌱
 
-[[Gemini 2.5 花の数字問題が解けた！]]
+[[Geminiが花の数字問題が解いた！]]
 
 [[GitHub PagesでQuartzをデプロイ]]
 
