@@ -1,23 +1,27 @@
 ---
 title: 🏖️🌴
-published: 2025-03-26T15:35:00
+published: 2025-03-26 15:35:00
+lastmod: 2025-03-29 00:30:24
 description: Quartz実験用ページ
-lastmod: 2025-03-26T16:07:00
 tags:
   - Quartz
   - 実験
 author:
   - "[[@highants.bsky.social]]"
 editor: highants
+fmContentType: quartz
 ---
-# 🌱
 
-[[Geminiが花の数字問題を解いた！]]
+## 🌱
 
-[[GitHub PagesでQuartzをデプロイ]]
+[ObsidianのUID管理の始め方](20250328224541Q.md)
 
-[[地球のエネルギー不均衡が記録更新]]
+[Geminiが花の数字問題を解いた！](20250326181700Q.md)
 
-[TEST](20250328113645.md)
+[QuartzをGitHub Pagesでデプロイ](20250326160800Q.md)
+
+[地球のエネルギー不均衡が記録更新](20250327204840Q.md)
+
+
 
 **Bluesky 🦋:** [highants](https://bsky.app/profile/highants.bsky.social)
