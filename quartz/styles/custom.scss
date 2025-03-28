@@ -19,16 +19,11 @@
     display: inline-block; 
     }
 
-.tags {
-    display: inline-block; /* 追加: インラインブロックとして表示 */
-    vertical-align: top; /* 修正: 上に揃える */
+.section > .tags {
     white-space: nowrap; /* 追加: 改行を禁止 */
-    }
-
-.section > .tags li{
     display: inline-block; /* 追加: インラインブロックとして表示 */
     }
 
-.section > .tags li a { /* 追加 */
-    font-size: 0.8em;
+.section > .tags li { /* 追加 */
+    font-size: 0.1em;
     }
