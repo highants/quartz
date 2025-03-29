@@ -1,28 +1,11 @@
 // quartz/components/Head.tsx
 import { i18n } from "../i18n"
-// `joinSegments` はURL結合に使いにくいため、URLオブジェクトや手動結合を使う
 import { FullSlug, getFileExtension, joinSegments, pathToRoot } from "../util/path"
 import { CSSResourceToStyleElement, JSResourceToScriptElement } from "../util/resources"
 import { googleFontHref, googleFontSubsetHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { unescapeHTML } from "../util/escape"
-import { CustomOgImagesEmitterName } from "../plugins/emitters/ogImage"
-
-// URLを安全に結合するヘルパー関数
-// base: e.g. https://example.com
-// parts: e.g. ['blog', 'post'] or ['/assets/image.png']
-function safeJoinUrl(base: string, ...parts: string[]): string {
-  let currentUrl = base.replace(/\/$/, ""); // Ensure base doesn't end with /
-  for (const part of parts) {
-      if (!part) continue; // Skip empty parts
-      const trimmedPart = part.replace(/^\/+/, ""); // Ensure part doesn't start with /
-      if (trimmedPart) {
-          currentUrl += "/" + trimmedPart;
-      }
-  }
-  return currentUrl;
-}
-
+import { CustomOgImagesEmitterName } from "../plugins/emitters/ogImage" // カスタムOGPプラグイン名をインポート
 
 export default (() => {
   const Head: QuartzComponent = ({
@@ -32,132 +15,152 @@ export default (() => {
     ctx,
   }: QuartzComponentProps) => {
     const titleSuffix = cfg.pageTitleSuffix ?? ""
+    // title: frontmatterがあればそれを使う、なければロケールのデフォルト
     const title =
       (fileData.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title) + titleSuffix
+    // description: frontmatterのsocialDescription, description, fileData.descriptionの順で試す
     const description =
-      fileData.frontmatter?.socialDescription ?? // socialDescription を優先
-      fileData.frontmatter?.description ??
-      unescapeHTML(fileData.description?.trim() ?? i18n(cfg.locale).propertyDefaults.description)
+      fileData.frontmatter?.socialDescription ?? // OGP/Twitter用
+      fileData.frontmatter?.description ??      // 一般的な説明
+      unescapeHTML(fileData.description?.trim() ?? i18n(cfg.locale).propertyDefaults.description) // ファイルから自動生成された説明
 
     const { css, js, additionalHead } = externalResources
 
-    // --- ベースURLの準備 (https:// の重複を防ぐ) ---
-    let RbaseUrl = cfg.baseUrl ?? "example.com";
-    // Remove potential protocol and trailing slash
-    RbaseUrl = RbaseUrl.replace(/^(https?:\/\/)?/, "").replace(/\/$/, "");
-    // Prepend https://
-    const absoluteBaseUrl = `https://${RbaseUrl}`;
-
-    // --- パスとURLの準備 ---
-    const url = new URL(absoluteBaseUrl)
-    const root = pathToRoot(fileData.slug!) // ルートへの相対パス (e.g. ../..)
-    const iconPath = safeJoinUrl(root, "static/icon.png") // rootからの相対パスでアイコンを指定
+    // ベースURLとパス関連
+    const RbaseUrl = `https://${cfg.baseUrl ?? "example.com"}` // 必ず https:// をつける
+    const url = new URL(RbaseUrl)
+    const path = url.pathname as FullSlug
+    const baseDir = fileData.slug === "404" ? path : pathToRoot(fileData.slug!)
+    const iconPath = joinSegments(baseDir, "static/icon.png") // ファビコンパス
 
     // 現在のページの完全なURL
-    const pageSlug = fileData.slug === "index" ? "" : fileData.slug! // indexページはルート
-    const socialUrl = fileData.slug === "404"
-        ? absoluteBaseUrl // 404ページはベースURLそのもの
-        : safeJoinUrl(absoluteBaseUrl, pageSlug) // ベースURLとスラグを結合
+    const socialUrl =
+      fileData.slug === "404" ? url.toString() : joinSegments(RbaseUrl, fileData.slug!)
 
-    // --- OGP/Twitter Card 画像の決定ロジック ---
-    const featuredImage = fileData.frontmatter?.featured_image as string | undefined
+    // --- OGP 画像ロジック ---
+    // カスタムOGP画像エミッターが有効かチェック
     const usesCustomOgImage = ctx.cfg.plugins.emitters.some(
       (e) => e.name === CustomOgImagesEmitterName,
     )
-    const defaultOgImageName = "static/og-image.png" // デフォルト画像のサイトルートからの相対パス
-    const ogImageDefaultPath = safeJoinUrl(absoluteBaseUrl, defaultOgImageName); // デフォルト画像の絶対URL
 
-    let ogImageUrl = ogImageDefaultPath
-    let ogImageType = `image/${getFileExtension(defaultOgImageName) ?? "png"}`
+    let ogImageUrl: string | null = null // OGP画像のURL
+    let ogImageType: string | null = null // OGP画像のMIMEタイプ (e.g., "image/png")
 
-    if (featuredImage) {
-      // featured_image が指定されている場合、それを最優先
-      // フロントマターのパスはサイトルートからの相対パスと仮定
-      // (例: /assets/image.png や _media/image.png)
-      const imagePath = featuredImage.startsWith("/") ? featuredImage : "/" + featuredImage; // Ensure starts with / for safeJoinUrl
-      ogImageUrl = safeJoinUrl(absoluteBaseUrl, imagePath); // 絶対URLを生成
-      ogImageType = `image/${getFileExtension(featuredImage) ?? "png"}`
+    // カスタムOGP画像生成が *有効でない* 場合のみ、ここでOGP画像を設定する
+    if (!usesCustomOgImage) {
+        // デフォルトのOGP画像パス
+        const defaultOgpImagePath = joinSegments(RbaseUrl, "/static/og-image.png")
+        // フロントマターから featured_image を取得
+        const featuredImage = fileData.frontmatter?.featured_image as string | undefined
+
+        if (featuredImage) {
+          // featured_image のパスを解決 (FeaturedImage.tsx と同様のロジック)
+          const imagePath = featuredImage.startsWith("/") ? featuredImage.substring(1) : featuredImage
+          const potentialOgImageUrl = joinSegments(RbaseUrl, imagePath) // 絶対URLを生成
+          const imageExtension = getFileExtension(potentialOgImageUrl)?.toLowerCase() // 拡張子を取得 (小文字に)
+
+          // サポートされている拡張子か確認 (必要に応じて追加)
+          const supportedExtensions = ["png", "jpg", "jpeg", "gif", "webp", "avif"]
+          if (imageExtension && supportedExtensions.includes(imageExtension)) {
+            ogImageUrl = potentialOgImageUrl
+            ogImageType = `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` // jpg は jpeg に
+          } else {
+              // featured_image が指定されているが無効なパスや拡張子の場合、警告を出し、デフォルトにフォールバック
+              console.warn(
+                  `[Head] Warning: Invalid featured_image path or unsupported extension for OGP in '${fileData.slug}': "${featuredImage}". Falling back to default OGP image.`
+              )
+              ogImageUrl = defaultOgpImagePath
+              ogImageType = `image/${getFileExtension(defaultOgpImagePath) ?? "png"}`
+          }
+        } else {
+          // featured_image がない場合はデフォルトを使用
+          ogImageUrl = defaultOgpImagePath
+          ogImageType = `image/${getFileExtension(defaultOgpImagePath) ?? "png"}`
+        }
     }
-
-    // デバッグ用ログ (必要に応じてコメントアウト解除)
-    // console.log("Base URL:", absoluteBaseUrl);
-    // console.log("Featured Image Path (from frontmatter):", featuredImage);
-    // console.log("Calculated OG Image URL:", ogImageUrl);
-    // console.log("Calculated Social URL:", socialUrl);
-    // console.log("Icon Path:", iconPath);
+    // --- OGP 画像ロジックここまで ---
 
 
     return (
       <head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        {/* Google Fonts (設定に応じて) */}
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
           <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="stylesheet" href={googleFontHref(cfg.theme)} />
-            {cfg.theme.typography.title && (
+            {/* タイトル用フォントが別なら追加 */}
+            {cfg.theme.typography.title && cfg.theme.typography.title !== cfg.theme.typography.body && (
               <link rel="stylesheet" href={googleFontSubsetHref(cfg.theme, cfg.pageTitle)} />
             )}
           </>
         )}
+        {/* 他のpreconnectなど */}
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        {/* 基本的なOGP/Twitter Card情報 */}
+        {/* 基本的なOGP/Twitter Cardタグ */}
         <meta name="og:site_name" content={cfg.pageTitle}></meta>
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={socialUrl}></meta> {/* socialUrl を使用 */}
-        <meta property="og:description" content={description} />
-        <meta name="twitter:card" content="summary_large_image" />
-        {cfg.baseUrl && <meta property="twitter:domain" content={RbaseUrl}></meta> } {/* プロトコルなしのドメイン */}
-        <meta property="twitter:url" content={socialUrl}></meta> {/* socialUrl を使用 */}
+        <meta name="twitter:card" content="summary_large_image" /> {/* 大きな画像を使うカードタイプ */}
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
+        <meta property="og:description" content={description} />
+        {/* 画像がない場合でも、altテキストはdescriptionを使うのが一般的 */}
+        <meta property="og:image:alt" content={description} />
 
-        {/* OGP/Twitter Card 画像 */}
-        {ogImageUrl && ( // ogImageUrl が確定している場合のみ出力 (カスタムエミッター以外)
-           !usesCustomOgImage || featuredImage // featuredImageがある場合はカスタムエミッターより優先
-        ) ? (
+        {/* OGP/Twitter 画像タグ (カスタムOGPが有効でない場合のみ) */}
+        {!usesCustomOgImage && ogImageUrl && ogImageType && (
           <>
             <meta property="og:image" content={ogImageUrl} />
-            <meta property="og:image:url" content={ogImageUrl} />
-            <meta property="og:image:secure_url" content={ogImageUrl} />
-            <meta property="og:image:type" content={ogImageType} />
+            <meta property="og:image:url" content={ogImageUrl} /> {/* URLも明示 */}
             <meta name="twitter:image" content={ogImageUrl} />
-            <meta property="og:image:alt" content={description} />
-            <meta name="twitter:image:alt" content={description} />
+            <meta property="og:image:type" content={ogImageType} />
+            {/* og:image:width と og:image:height を追加したい場合は、
+                ビルドプロセス中に画像の寸法を取得する仕組みが必要になります。
+                例: <meta property="og:image:width" content="1200" />
+                    <meta property="og:image:height" content="630" /> */}
           </>
-        ) : usesCustomOgImage ? (
-           // カスタムエミッターを使う場合、代替テキストのみ設定
+        )}
+
+        {/* URL関連のタグ (baseUrlが設定されている場合) */}
+        {cfg.baseUrl && (
           <>
-             <meta property="og:image:alt" content={description} />
-             <meta name="twitter:image:alt" content={description} />
+            <meta property="twitter:domain" content={cfg.baseUrl}></meta>
+            <meta property="og:url" content={socialUrl}></meta>
+            <meta property="twitter:url" content={socialUrl}></meta>
           </>
-        ) : null /* ここに来ることはないはず */ }
+        )}
 
-
-        {/* その他 */}
+        {/* ファビコン */}
         <link rel="icon" href={iconPath} />
+        {/* 通常の description タグ */}
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
 
-        {/* 外部リソース */}
+        {/* 外部CSSリソース */}
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
+        {/* 外部JSリソース (DOMReady前) */}
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
           .map((res) => JSResourceToScriptElement(res, true))}
+        {/* 追加のHead要素 (プラグインなどから) */}
         {additionalHead.map((resource) => {
           if (typeof resource === "function") {
-            return resource(fileData)
+            return resource(fileData) // 関数なら実行結果を挿入
           } else {
-            return resource
+            return resource // React要素ならそのまま挿入
           }
         })}
       </head>
     )
   }
+
+  // スタイル定義は不要なので削除
+  // Head.css = `...`
 
   return Head
 }) satisfies QuartzComponentConstructor
