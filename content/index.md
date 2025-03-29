@@ -22,6 +22,8 @@ fmContentType: quartz
 
 [地球のエネルギー不均衡が記録更新](20250327204840Q.md)
 
+[Obsidian Web Clipperのハイライトクリッピング](20250323154335Q.md)
 
+[Obsidian Web Clipper for Bluesky](20250329010136Q.md)
 
 **Bluesky 🦋:** [highants](https://bsky.app/profile/highants.bsky.social)
