@@ -1,3 +1,4 @@
+// quartz/components/Head.tsx
 import { i18n } from "../i18n"
 import { FullSlug, getFileExtension, joinSegments, pathToRoot } from "../util/path"
 import { CSSResourceToStyleElement, JSResourceToScriptElement } from "../util/resources"
@@ -5,6 +6,7 @@ import { googleFontHref, googleFontSubsetHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { unescapeHTML } from "../util/escape"
 import { CustomOgImagesEmitterName } from "../plugins/emitters/ogImage"
+
 export default (() => {
   const Head: QuartzComponent = ({
     cfg,
@@ -31,10 +33,28 @@ export default (() => {
     const socialUrl =
       fileData.slug === "404" ? url.toString() : joinSegments(url.toString(), fileData.slug!)
 
+    // ★★★ 画像ベースURLの定義を修正 ★★★
+    // GitHub Pagesの構成に合わせて末尾にスラッシュを追加
+    //コンテンツルートからの相対パスを想定
+    const imageBaseUrl = joinSegments(cfg.baseUrl ?? "", "content", "_media")
+
+    // ★ デフォルトのOGイメージパスを設定 ★
+    const defaultOgImagePath = `https://${cfg.baseUrl ?? "example.com"}/static/og-image.png`
+
+    // ★ featured_image を取得し、絶対URLを生成 ★
+    let ogImagePath = defaultOgImagePath // まずデフォルトを設定
+    const featuredImageFilename = fileData.frontmatter?.featured_image as string | undefined
+    if (featuredImageFilename) {
+      // FeaturedImage.tsxと同様に、パスを解決
+      const resolvedImagePath = featuredImageFilename.startsWith("/") ? featuredImageFilename.substring(1) : featuredImageFilename
+      // 固定ベースURLとファイル名を結合してOGイメージパスを作成
+      ogImagePath = joinSegments(url.origin, imageBaseUrl, resolvedImagePath)
+    }
+
     const usesCustomOgImage = ctx.cfg.plugins.emitters.some(
       (e) => e.name === CustomOgImagesEmitterName,
     )
-    const ogImageDefaultPath = `https://${cfg.baseUrl}/static/og-image.png`
+    // ここにあった ogImageDefaultPath の定義は上に移動したので不要
 
     return (
       <head>
@@ -63,13 +83,14 @@ export default (() => {
         <meta property="og:image:alt" content={description} />
 
         {!usesCustomOgImage && (
+          // ★ featured_image があればそれを使用し、なければデフォルトを使用 ★
           <>
-            <meta property="og:image" content={ogImageDefaultPath} />
-            <meta property="og:image:url" content={ogImageDefaultPath} />
-            <meta name="twitter:image" content={ogImageDefaultPath} />
+            <meta property="og:image" content={ogImagePath} />
+            <meta property="og:image:url" content={ogImagePath} />
+            <meta name="twitter:image" content={ogImagePath} />
             <meta
               property="og:image:type"
-              content={`image/${getFileExtension(ogImageDefaultPath) ?? "png"}`}
+              content={`image/${getFileExtension(ogImagePath) ?? "png"}`}
             />
           </>
         )}
@@ -92,6 +113,9 @@ export default (() => {
           .map((res) => JSResourceToScriptElement(res, true))}
         {additionalHead.map((resource) => {
           if (typeof resource === "function") {
+            // NOTE: additional head fn likely won't have access to the modified `ogImagePath`
+            // defined above, as it is scoped to the component, unless passed explicitly.
+            // If the fn needs the resolved OG image path, consider refactoring.
             return resource(fileData)
           } else {
             return resource
