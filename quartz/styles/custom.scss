@@ -28,11 +28,26 @@
     font-size: 0.1em;
     }
 
-tbody,
-p {
-    line-height: 2.7rem; // Increased from 1.8rem
+//ページ内の行間変更設定
+
+.page article p {
+    line-height: 2.3rem; // Increased from 1.8rem
+    margin-top: 1rem; /* 上マージンを調整 */
+    margin-bottom: 1rem; /* 下マージンを調整 */
 }
 
-li {
-    line-height: 3.2rem; // Increased from 2.5rem
+.page article li{
+    line-height: 2.8rem;
+    padding-left: 0.15em; // インデントを増やす
+  }
+
+.page article ul {
+    line-height: 0.1rem; // リストの行間を広げる
+    padding-left: 3.8rem; 
+    
+}
+
+.page article ol{
+    line-height: 0.1rem; // リストの行間を広げる
+    padding-left: 3.8rem; 
 }

@@ -47,8 +47,9 @@ FeaturedImage.css = `
   object-fit: cover; /* コンテナに合わせて画像をトリミング・拡大縮小 */
   object-position: center; /* 中央を基準にトリミング */
   border-radius: 10px; /* 角を少し丸める（オプション） */
-　mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* 上から下に向けてアルファを下げる */
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Safari対応 */
+/* Modified mask-image */
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 22%, rgba(0, 0, 0, 0) 45%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 22%, rgba(0, 0, 0, 0) 45%);
 }
 `
 
