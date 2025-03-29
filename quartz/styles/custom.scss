@@ -27,3 +27,12 @@
 .section > .tags li { /* 追加 */
     font-size: 0.1em;
     }
+
+tbody,
+p {
+    line-height: 2.7rem; // Increased from 1.8rem
+}
+
+li {
+    line-height: 3.2rem; // Increased from 2.5rem
+}
