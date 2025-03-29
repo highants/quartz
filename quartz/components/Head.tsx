@@ -1,11 +1,28 @@
 // quartz/components/Head.tsx
 import { i18n } from "../i18n"
+// `joinSegments` はURL結合に使いにくいため、URLオブジェクトや手動結合を使う
 import { FullSlug, getFileExtension, joinSegments, pathToRoot } from "../util/path"
 import { CSSResourceToStyleElement, JSResourceToScriptElement } from "../util/resources"
 import { googleFontHref, googleFontSubsetHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { unescapeHTML } from "../util/escape"
 import { CustomOgImagesEmitterName } from "../plugins/emitters/ogImage"
+
+// URLを安全に結合するヘルパー関数
+// base: e.g. https://example.com
+// parts: e.g. ['blog', 'post'] or ['/assets/image.png']
+function safeJoinUrl(base: string, ...parts: string[]): string {
+  let currentUrl = base.replace(/\/$/, ""); // Ensure base doesn't end with /
+  for (const part of parts) {
+      if (!part) continue; // Skip empty parts
+      const trimmedPart = part.replace(/^\/+/, ""); // Ensure part doesn't start with /
+      if (trimmedPart) {
+          currentUrl += "/" + trimmedPart;
+      }
+  }
+  return currentUrl;
+}
+
 
 export default (() => {
   const Head: QuartzComponent = ({
@@ -24,34 +41,51 @@ export default (() => {
 
     const { css, js, additionalHead } = externalResources
 
-    // ベースURLとパスの準備
-    const RbaseUrl = `https://${cfg.baseUrl?.replace(/\/$/, "") ?? "example.com"}` // https:// を追加し、末尾スラッシュを削除
-    const url = new URL(RbaseUrl)
-    const path = url.pathname as FullSlug
-    const baseDir = fileData.slug === "404" ? path : pathToRoot(fileData.slug!)
-    const iconPath = joinSegments(baseDir, "static/icon.png") // baseDir は pathToRoot から取得するため、baseUrl は不要
+    // --- ベースURLの準備 (https:// の重複を防ぐ) ---
+    let RbaseUrl = cfg.baseUrl ?? "example.com";
+    // Remove potential protocol and trailing slash
+    RbaseUrl = RbaseUrl.replace(/^(https?:\/\/)?/, "").replace(/\/$/, "");
+    // Prepend https://
+    const absoluteBaseUrl = `https://${RbaseUrl}`;
+
+    // --- パスとURLの準備 ---
+    const url = new URL(absoluteBaseUrl)
+    const root = pathToRoot(fileData.slug!) // ルートへの相対パス (e.g. ../..)
+    const iconPath = safeJoinUrl(root, "static/icon.png") // rootからの相対パスでアイコンを指定
 
     // 現在のページの完全なURL
-    const socialUrl =
-      fileData.slug === "404" ? url.toString() : joinSegments(RbaseUrl, fileData.slug!)
+    const pageSlug = fileData.slug === "index" ? "" : fileData.slug! // indexページはルート
+    const socialUrl = fileData.slug === "404"
+        ? absoluteBaseUrl // 404ページはベースURLそのもの
+        : safeJoinUrl(absoluteBaseUrl, pageSlug) // ベースURLとスラグを結合
 
-    // OGP/Twitter Card 画像の決定ロジック
+    // --- OGP/Twitter Card 画像の決定ロジック ---
     const featuredImage = fileData.frontmatter?.featured_image as string | undefined
     const usesCustomOgImage = ctx.cfg.plugins.emitters.some(
       (e) => e.name === CustomOgImagesEmitterName,
     )
-    const ogImageDefaultPath = joinSegments(RbaseUrl, "static/og-image.png") // デフォルト画像の絶対URL
+    const defaultOgImageName = "static/og-image.png" // デフォルト画像のサイトルートからの相対パス
+    const ogImageDefaultPath = safeJoinUrl(absoluteBaseUrl, defaultOgImageName); // デフォルト画像の絶対URL
 
     let ogImageUrl = ogImageDefaultPath
-    let ogImageType = `image/${getFileExtension(ogImageDefaultPath) ?? "png"}`
+    let ogImageType = `image/${getFileExtension(defaultOgImageName) ?? "png"}`
 
     if (featuredImage) {
       // featured_image が指定されている場合、それを最優先
-      const imagePath = featuredImage.startsWith("/") ? featuredImage.substring(1) : featuredImage
-      ogImageUrl = joinSegments(RbaseUrl, imagePath) // 絶対URLを生成
+      // フロントマターのパスはサイトルートからの相対パスと仮定
+      // (例: /assets/image.png や _media/image.png)
+      const imagePath = featuredImage.startsWith("/") ? featuredImage : "/" + featuredImage; // Ensure starts with / for safeJoinUrl
+      ogImageUrl = safeJoinUrl(absoluteBaseUrl, imagePath); // 絶対URLを生成
       ogImageType = `image/${getFileExtension(featuredImage) ?? "png"}`
     }
-    // featured_image がなく、カスタムOGイメージエミッターも使わない場合は、デフォルト画像が使われる (ogImageUrlの初期値)
+
+    // デバッグ用ログ (必要に応じてコメントアウト解除)
+    // console.log("Base URL:", absoluteBaseUrl);
+    // console.log("Featured Image Path (from frontmatter):", featuredImage);
+    // console.log("Calculated OG Image URL:", ogImageUrl);
+    // console.log("Calculated Social URL:", socialUrl);
+    // console.log("Icon Path:", iconPath);
+
 
     return (
       <head>
@@ -74,50 +108,35 @@ export default (() => {
         <meta name="og:site_name" content={cfg.pageTitle}></meta>
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={socialUrl}></meta> {/* socialUrl を使用 */}
+        <meta property="og:description" content={description} />
         <meta name="twitter:card" content="summary_large_image" />
+        {cfg.baseUrl && <meta property="twitter:domain" content={RbaseUrl}></meta> } {/* プロトコルなしのドメイン */}
+        <meta property="twitter:url" content={socialUrl}></meta> {/* socialUrl を使用 */}
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image:alt" content={description} /> {/* 代替テキスト */}
 
-        {/*
-          OGP/Twitter Card 画像
-          1. featured_image があればそれを使用
-          2. なければ、カスタムOGイメージエミッターが有効ならエミッターに任せる (ここではタグを出力しない)
-          3. どちらでもなければ、デフォルト画像を使用
-        */}
-        {featuredImage ? (
-          // 1. featured_image がある場合
+        {/* OGP/Twitter Card 画像 */}
+        {ogImageUrl && ( // ogImageUrl が確定している場合のみ出力 (カスタムエミッター以外)
+           !usesCustomOgImage || featuredImage // featuredImageがある場合はカスタムエミッターより優先
+        ) ? (
           <>
             <meta property="og:image" content={ogImageUrl} />
             <meta property="og:image:url" content={ogImageUrl} />
-            <meta name="twitter:image" content={ogImageUrl} />
+            <meta property="og:image:secure_url" content={ogImageUrl} />
             <meta property="og:image:type" content={ogImageType} />
+            <meta name="twitter:image" content={ogImageUrl} />
+            <meta property="og:image:alt" content={description} />
+            <meta name="twitter:image:alt" content={description} />
           </>
-        ) : !usesCustomOgImage ? (
-          // 3. featured_image がなく、カスタムエミッターも使わない場合 (デフォルト画像)
+        ) : usesCustomOgImage ? (
+           // カスタムエミッターを使う場合、代替テキストのみ設定
           <>
-            <meta property="og:image" content={ogImageDefaultPath} />
-            <meta property="og:image:url" content={ogImageDefaultPath} />
-            <meta name="twitter:image" content={ogImageDefaultPath} />
-            <meta
-              property="og:image:type"
-              content={`image/${getFileExtension(ogImageDefaultPath) ?? "png"}`}
-            />
+             <meta property="og:image:alt" content={description} />
+             <meta name="twitter:image:alt" content={description} />
           </>
-        ) : (
-          // 2. featured_image がなく、カスタムエミッターを使う場合 (タグはエミッターが出力)
-          <></>
-        )}
+        ) : null /* ここに来ることはないはず */ }
 
-        {/* URL関連 */}
-        {cfg.baseUrl && (
-          <>
-            <meta property="twitter:domain" content={cfg.baseUrl}></meta>
-            <meta property="og:url" content={socialUrl}></meta>
-            <meta property="twitter:url" content={socialUrl}></meta>
-          </>
-        )}
 
         {/* その他 */}
         <link rel="icon" href={iconPath} />
@@ -139,11 +158,6 @@ export default (() => {
       </head>
     )
   }
-
-  // CSSは変更なし
-  // Head.css = `
-  // /* 必要であればスタイルを追加 */
-  // `
 
   return Head
 }) satisfies QuartzComponentConstructor
