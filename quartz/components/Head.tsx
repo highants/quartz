@@ -39,28 +39,37 @@ export default (() => {
     let ogImageUrl = ogImageDefaultPath
     let ogImageType = `image/${getFileExtension(ogImageDefaultPath) ?? "png"}`
 
-    // フロントマターから featured_image を取得
-    const featuredImage = fileData.frontmatter?.featured_image as string | undefined
+    // カスタムOGP画像生成が *有効でない* 場合のみ、ここでOGP画像を設定する
+    if (!usesCustomOgImage) {
+        // デフォルトのOGP画像パス
+        const defaultOgpImagePath = joinSegments(url.toString(), "/static/og-image.png")
+        // フロントマターから featured_image を取得
+        const featuredImage = fileData.frontmatter?.featured_image as string | undefined
 
-    if (featuredImage) {
-      // featured_image のパスを解決 (FeaturedImage.tsx と同様のロジック)
-      const imagePath = featuredImage.startsWith("/") ? featuredImage.substring(1) : featuredImage
-      const potentialOgImageUrl = joinSegments(url.toString(), imagePath) // 絶対URLを生成
-      const imageExtension = getFileExtension(potentialOgImageUrl)?.toLowerCase() // 拡張子を取得 (小文字に)
+        if (featuredImage) {
+          // featured_image のパスを解決 (FeaturedImage.tsx と同様のロジック)
+          const imagePath = featuredImage.startsWith("/") ? featuredImage.substring(1) : featuredImage
+          const potentialOgImageUrl = joinSegments(url.toString(), imagePath) // 絶対URLを生成
+          const imageExtension = getFileExtension(potentialOgImageUrl)?.toLowerCase() // 拡張子を取得 (小文字に)
 
-      // サポートされている拡張子か確認 (必要に応じて追加)
-      const supportedExtensions = ["png", "jpg", "jpeg", "gif", "webp", "avif"]
-      if (imageExtension && supportedExtensions.includes(imageExtension)) {
-        ogImageUrl = potentialOgImageUrl
-        ogImageType = `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` // jpg は jpeg に
-      } else {
-          // featured_image が指定されているが無効なパスや拡張子の場合、警告を出し、デフォルトにフォールバック
-          console.warn(
-              `[Head] Warning: Invalid featured_image path or unsupported extension for OGP in '${fileData.slug}': "${featuredImage}". Falling back to default OGP image.`
-          )
-          ogImageUrl = ogImageDefaultPath
-          ogImageType = `image/${getFileExtension(ogImageDefaultPath) ?? "png"}`
-      }
+          // サポートされている拡張子か確認 (必要に応じて追加)
+          const supportedExtensions = ["png", "jpg", "jpeg", "gif", "webp", "avif"]
+          if (imageExtension && supportedExtensions.includes(imageExtension)) {
+            ogImageUrl = potentialOgImageUrl
+            ogImageType = `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` // jpg は jpeg に
+          } else {
+              // featured_image が指定されているが無効なパスや拡張子の場合、警告を出し、デフォルトにフォールバック
+              console.warn(
+                  `[Head] Warning: Invalid featured_image path or unsupported extension for OGP in '${fileData.slug}': "${featuredImage}". Falling back to default OGP image.`
+              )
+              ogImageUrl = defaultOgpImagePath
+              ogImageType = `image/${getFileExtension(defaultOgpImagePath) ?? "png"}`
+          }
+        } else {
+          // featured_image がない場合はデフォルトを使用
+          ogImageUrl = defaultOgpImagePath
+          ogImageType = `image/${getFileExtension(defaultOgpImagePath) ?? "png"}`
+        }
     }
 
     return (
@@ -89,12 +98,14 @@ export default (() => {
         <meta property="og:description" content={description} />
         <meta property="og:image:alt" content={description} />
 
-        <>
-          <meta property="og:image" content={ogImageUrl} />
-          <meta property="og:image:url" content={ogImageUrl} />
-          <meta name="twitter:image" content={ogImageUrl} />
-          <meta property="og:image:type" content={ogImageType} />
-        </>
+        {!usesCustomOgImage && (
+          <>
+            <meta property="og:image" content={ogImageUrl} />
+            <meta property="og:image:url" content={ogImageUrl} />
+            <meta name="twitter:image" content={ogImageUrl} />
+            <meta property="og:image:type" content={ogImageType} />
+          </>
+        )}
 
         {cfg.baseUrl && (
           <>
