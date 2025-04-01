@@ -31,23 +31,52 @@
 //ページ内の行間変更設定
 
 .page article p {
-    line-height: 2.3rem; // Increased from 1.8rem
+    line-height: 2.1rem; // Increased from 1.8rem
+    margin-top: 1.2rem; /* 上マージンを調整 */
+    margin-bottom: 1.2rem; /* 下マージンを調整 */
+}
+
+.page article 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 4.3rem; // Increased from 1.8rem
     margin-top: 1rem; /* 上マージンを調整 */
     margin-bottom: 1rem; /* 下マージンを調整 */
 }
 
+.page article 
+h1 {
+    font-size: 2rem;
+}
+
+.page article 
+h2 {
+    font-size: 1.75rem;
+}
+
+.page article 
+h3 {
+    font-size: 1.5rem;
+}
+
 .page article li{
-    line-height: 2.8rem;
-    padding-left: 0.15em; // インデントを増やす
+    line-height: 2rem;
+    padding-left: 0.1em; // インデントを増やす
+    margin-top: 1rem; /* 上マージンを調整 */
+    margin-bottom: 1rem; /* 下マージンを調整 */
   }
 
 .page article ul {
     line-height: 0.1rem; // リストの行間を広げる
-    padding-left: 3.8rem; 
+    padding-left: 2.8rem; 
     
 }
 
 .page article ol{
-    line-height: 0.1rem; // リストの行間を広げる
-    padding-left: 3.8rem; 
+    line-height: 1rem; // リストの行間を広げる
+    padding-left: 2.8rem; 
 }

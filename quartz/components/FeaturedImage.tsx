@@ -45,7 +45,7 @@ FeaturedImage.css = `
   max-height: 400px; /* 画像の高さを制限（お好みで調整） */
   height: auto; /* アスペクト比を維持 */
   object-fit: cover; /* コンテナに合わせて画像をトリミング・拡大縮小 */
-  object-position: center; /* 中央を基準にトリミング */
+  object-position: 50% 55%; /* 中央を基準にトリミング */
   border-radius: 10px; /* 角を少し丸める（オプション） */
 /* Modified mask-image */
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 22%, rgba(0, 0, 0, 0) 45%);

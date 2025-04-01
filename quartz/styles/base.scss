@@ -18,8 +18,8 @@ section {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
-  font-size: 17px; // フォントサイズを大きく
-  letter-spacing: 0em; // 文字の間隔を調整
+  font-size: 16.8px; // フォントサイズを大きく
+  letter-spacing: -0.015em; // 文字の間隔を調整
   font-stretch: normal; // 文字の横幅を広げる（例）
 }
 
@@ -62,13 +62,7 @@ ul,
   /* tr and td removed from list of selectors for overflow-wrap, allowing them to use default 'normal' property value */
 }
 
-li{
-  padding-left: 0.1em; // インデントを増やす
-}
 
-ul {
-  padding-left: 2rem; // インデントを増やす
-}
 
 .math {
   &.math-display {
