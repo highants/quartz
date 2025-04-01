@@ -17,11 +17,10 @@ export default (() => {
     // ctx,
   }: QuartzComponentProps) => {
     const titleSuffix = cfg.pageTitleSuffix ?? ""
-    const pageTitle =
-      fileData.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title
-    const siteName = cfg.pageTitle ?? "" // サイト名を取得
-    const title = pageTitle + titleSuffix // ページタイトルにサフィックスを追加
-    const fullTitle = pageTitle + (siteName ? ` - ${siteName}` : "") // ページタイトルにサイト名を結合
+    const pageTitle = fileData.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title;
+    const siteName = cfg.pageTitle ?? "";
+    const title = pageTitle + titleSuffix;
+    const ogTitle = `${pageTitle} | ${siteName}`; // 変更点: ページタイトル + サイトネーム
     const description =
       fileData.frontmatter?.socialDescription ??
       fileData.frontmatter?.description ??
@@ -90,15 +89,15 @@ export default (() => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/* 基本的な OGP タグ */}
-        <meta property="og:site_name" content={siteName} /> {/* サイト名を追加 */}
-        <meta property="og:title" content={fullTitle} /> {/* 変更: ページタイトル + サイト名 */}
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:title" content={ogTitle} /> {/* 変更点: og:title を変更 */}
         <meta property="og:description" content={description} />
         {cfg.baseUrl && <meta property="og:url" content={socialUrl} /> }
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="website" /> {/* 記事ページなら "article" も検討 */}
 
         {/* Twitter Card タグ */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={fullTitle} /> {/* 変更: ページタイトル + サイト名 */}
+        <meta name="twitter:title" content={ogTitle} /> {/* 変更点: twitter:title を変更 */}
         <meta name="twitter:description" content={description} />
         {cfg.baseUrl && <meta property="twitter:domain" content={RbaseUrl} />}
         {cfg.baseUrl && <meta property="twitter:url" content={socialUrl} />}
