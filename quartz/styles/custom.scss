@@ -2,36 +2,44 @@
 
 // put your custom CSS here!
 
+///ページリストの設定
+
 .section p {
-    font-size: 1em;
+    font-size: 0.95em;
     padding-right: 0rem;
-    padding-top: 0.3rem;
+    padding-top: 0rem;
     }
 
-.section > .meta { /* 追加 */
+.section > .meta { /* メタデータの幅を設定 */
     width: 120px; /* 例として200pxに設定、必要に応じて調整 */
     display: inline-block; /* またはblock, flexなど、適切な表示形式 */
     vertical-align: top;
     }
 
 .section > .desc > h3{
+    font-size: 0.95em;
     vertical-align: top;
     display: inline-block; 
+    line-height: 0rem;
+    margin-top: 0.3rem; /* 上マージンを調整 */
+    margin-bottom: 0rem; /* 下マージンを調整 */
     }
 
 .section > .tags {
-    white-space: nowrap; /* 追加: 改行を禁止 */
-    display: inline-block; /* 追加: インラインブロックとして表示 */
+    white-space: nowrap; /* 改行を禁止 */
+    display: inline-block; /* インラインブロックとして表示 */
+    vertical-align: top;
+    margin-top: -0.2rem; /* 上マージンを調整 */
     }
 
-.section > .tags li { /* 追加 */
+.section > .tags li { /* タグのフォントサイズを設定 */
     font-size: 0.1em;
     }
 
 //ページ内の行間変更設定
 
 .page article p {
-    line-height: 2.1rem; // Increased from 1.8rem
+    line-height: 2.1rem; // 1.8remから増加
     margin-top: 1.2rem; /* 上マージンを調整 */
     margin-bottom: 1.2rem; /* 下マージンを調整 */
 }
@@ -43,7 +51,7 @@ h3,
 h4,
 h5,
 h6 {
-    line-height: 4.3rem; // Increased from 1.8rem
+    line-height: 4.3rem; // 1.8remから増加
     margin-top: 1rem; /* 上マージンを調整 */
     margin-bottom: 1rem; /* 下マージンを調整 */
 }
@@ -79,4 +87,42 @@ h3 {
 .page article ol{
     line-height: 1rem; // リストの行間を広げる
     padding-left: 2.8rem; 
+}
+
+/* Explorerコンポーネント内の長いタイトルを省略する */
+.explorer .folder-title,
+.explorer li > a {
+  font-size: 1.3rem;
+  line-height: 2.5rem;
+  white-space: nowrap; /* テキストが次の行に折り返されるのを防ぐ */
+  overflow: hidden;    /* コンテナから溢れるテキストを隠す */
+  text-overflow: ellipsis; /* 省略されたテキストの末尾に省略記号(...)を追加する */
+  display: block; /* 上記のプロパティが正しく機能するようにする */
+  max-width: 100%; /* 幅をコンテナの幅に制限する */
+}
+
+/* オプション: ホバー時に完全なタイトルを表示するツールチップを追加する */
+.explorer .folder-title:hover,
+.explorer li > a:hover {
+  overflow: visible; /* ホバー時に完全なテキストを表示する */
+  white-space: normal; /* ホバー時にテキストの折り返しを許可する */
+  text-overflow: clip; /* ホバー時に省略記号を削除する */
+  position: relative; /* ツールチップの位置調整に必要 */
+}
+
+.explorer .folder-title:hover::after,
+.explorer li > a:hover::after {
+  content: attr(data-full-title); /* data-full-title属性から完全なタイトルを表示する */
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: var(--light); /* 必要に応じて背景色を調整 */
+  color: var(--dark); /* 必要に応じてテキスト色を調整 */
+  padding: 5px 10px;
+  border-radius: 4px;
+  z-index: 10; /* ツールチップが最前面に表示されるようにする */
+  white-space: normal;
+  width: max-content;
+  max-width: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
