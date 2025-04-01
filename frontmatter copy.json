@@ -1,0 +1,421 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "memo",
+      "pageBundle": false,
+      "previewPath": "/memo",
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Lastmod",
+          "name": "lastmod",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isModifiedDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "page",
+      "pageBundle": false,
+      "previewPath": "/page",
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Lastmod",
+          "name": "lastmod",
+          "type": "datetime",
+          "isModifiedDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Featured_image",
+          "name": "featured_image",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Source",
+          "name": "source",
+          "type": "string"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "string"
+        },
+        {
+          "title": "Editor",
+          "name": "editor",
+          "type": "string"
+        },
+        {
+          "title": "SeriesTitle",
+          "name": "seriesTitle",
+          "type": "string"
+        },
+        {
+          "title": "SeriesNo",
+          "name": "seriesNo",
+          "type": "number"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        }
+      ]
+    },
+    {
+      "name": "note",
+      "pageBundle": false,
+      "previewPath": "/note",
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Lastmod",
+          "name": "lastmod",
+          "type": "datetime",
+          "isModifiedDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Featured_image",
+          "name": "featured_image",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "tags"
+        },
+        {
+          "title": "Editor",
+          "name": "editor",
+          "type": "string"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        }
+      ]
+    },
+    {
+      "name": "clippings",
+      "pageBundle": false,
+      "previewPath": "/clippings",
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Source",
+          "name": "source",
+          "type": "string"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "string"
+        },
+        {
+          "title": "Published",
+          "name": "published",
+          "type": "string"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "quartz",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Lastmod",
+          "name": "lastmod",
+          "type": "datetime",
+          "isModifiedDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "featured_image",
+          "name": "featured_image",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "choice",
+          "choices": [
+            "[[@highants.bsky.social]]"
+          ]
+        },
+        {
+          "title": "Editor",
+          "name": "editor",
+          "type": "string"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        }
+      ]
+    },
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "UID",
+          "name": "uid",
+          "type": "number"
+        },
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Pub date",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Lastmod",
+          "name": "lastmod",
+          "type": "datetime",
+          "isModifiedDate": true,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "fmContentType",
+          "name": "fmContentType",
+          "type": "string"
+        },
+        {
+          "title": "Is in draft",
+          "name": "draft",
+          "type": "draft"
+        }
+      ]
+    }
+  ],
+  "frontMatter.framework.id": "Quartz4",
+  "frontMatter.content.publicFolder": "content/_media",
+  "frontMatter.preview.host": "http://localhost:8080",
+  "frontMatter.framework.startCommand": "npx quartz build --serve",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "content",
+      "path": "[[workspace]]/content"
+    }
+  ],
+  "frontMatter.git.enabled": true,
+  "frontMatter.copilot.family": "gpt-4o-copilot"
+}
