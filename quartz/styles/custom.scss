@@ -92,7 +92,7 @@ h3 {
 /* Explorerコンポーネント内の長いタイトルを省略する */
 .explorer .folder-title,
 .explorer li > a {
-  font-size: 1.3rem;
+  font-size: 16px;
   line-height: 2.5rem;
   white-space: nowrap; /* テキストが次の行に折り返されるのを防ぐ */
   overflow: hidden;    /* コンテナから溢れるテキストを隠す */
