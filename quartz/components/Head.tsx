@@ -72,7 +72,7 @@ export default (() => {
 
     return (
       <head>
-        <title>{title}</title>
+        <title>{ogTitle}</title>
         <meta charSet="utf-8" />
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
           <>
