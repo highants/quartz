@@ -39,7 +39,7 @@
 //ページ内の行間変更設定
 
 .page article p {
-    line-height: 2.1rem; // 1.8remから増加
+    line-height: 2rem; // 1.8remから増加
     margin-top: 1.2rem; /* 上マージンを調整 */
     margin-bottom: 1.2rem; /* 下マージンを調整 */
 }
@@ -72,7 +72,7 @@ h3 {
 }
 
 .page article li{
-    line-height: 2rem;
+    line-height: 1.5rem;
     padding-left: 0.1em; // インデントを増やす
     margin-top: 1rem; /* 上マージンを調整 */
     margin-bottom: 1rem; /* 下マージンを調整 */
