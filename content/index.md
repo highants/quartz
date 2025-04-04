@@ -13,6 +13,7 @@ fmContentType: quartz
 ---
 
 ## 🌱
+[[記事翻訳] Markdownと「書式設定フェティシズム」の緩やかな終焉](20250404133137Q.md)
 
 [未来図だね、MarkdownとAIと君と](20250403195138Q.md)
 
