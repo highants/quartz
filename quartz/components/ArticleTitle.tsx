@@ -14,6 +14,7 @@ ArticleTitle.css = `
 .article-title {
   font-size: 2.5rem;
   letter-spacing: 0.03em;
+  line-height: 3.2rem;
   margin: 1.8rem 0 0.8rem 0;
 }
 `
