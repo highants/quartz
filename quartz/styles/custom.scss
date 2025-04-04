@@ -91,9 +91,14 @@ h3 {
 
 /* Explorerコンポーネント内の長いタイトルを省略する */
 .explorer .folder-title,
+
+.explorer li {
+    margin-bottom: 0.8rem;
+  }
+
 .explorer li > a {
   font-size: 16px;
-  line-height: 2.5rem;
+  line-height: 1.7rem;
   white-space: nowrap; /* テキストが次の行に折り返されるのを防ぐ */
   overflow: hidden;    /* コンテナから溢れるテキストを隠す */
   text-overflow: ellipsis; /* 省略されたテキストの末尾に省略記号(...)を追加する */
