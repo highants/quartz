@@ -3,15 +3,18 @@ import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { joinSegments } from "../util/path" // 必要なユーティリティをインポート
 
 function FeaturedImage({ fileData, cfg, displayClass }: QuartzComponentProps) {
-  const featuredImage = fileData.frontmatter?.featured_image as string | undefined
+  const socialImage = fileData.frontmatter?.socialImage as string | undefined
 
-  if (featuredImage) {
+  if (socialImage) {
     // 画像パスを解決
     // フロントマターのパスは通常、コンテンツルートからの相対パスです
     // cfg.baseUrl を考慮して絶対パスを生成します。
-    const imagePath = featuredImage.startsWith("/") ? featuredImage.substring(1) : featuredImage
-    const RbaseUrl = cfg.baseUrl?.replace(/\/$/, "") ?? "" // 末尾のスラッシュを削除
-    const imageUrl = joinSegments(RbaseUrl, imagePath) // パスを結合
+    let imageUrl = socialImage;
+    if (!socialImage.startsWith("http://") && !socialImage.startsWith("https://")) {
+      const imagePath = socialImage.startsWith("/") ? socialImage.substring(1) : socialImage
+      const RbaseUrl = cfg.baseUrl?.replace(/\/$/, "") ?? "" // 末尾のスラッシュを削除
+      imageUrl = joinSegments(RbaseUrl, imagePath) // パスを結合
+    }
 
     // もしくは、もし画像が現在のページからの相対パスである場合は resolveRelative を使う
     // const imageUrl = resolveRelative(fileData.slug, featuredImage)
