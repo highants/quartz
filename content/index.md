@@ -6,6 +6,7 @@ description: Quartz実験用ページ
 tags:
   - Quartz
   - 実験
+socialImage: https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:aqrbayxkmfs4tdhcg3c5mb73/bafkreifg6k33wh3teegpgggfmcwz5fsgwxbw2hlbmfvcecti5yvuvtynae@jpeg
 author:
   - "[[@highants.bsky.social]]"
 editor: highants
