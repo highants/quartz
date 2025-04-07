@@ -9,12 +9,5 @@ author:
 editor: highants
 fmContentType: quartz
 ---
-
 <img src="https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:aqrbayxkmfs4tdhcg3c5mb73/bafkreifg6k33wh3teegpgggfmcwz5fsgwxbw2hlbmfvcecti5yvuvtynae@jpeg" style="display: block; margin: auto;">
-
-
-## 🌱
-
-デジタルガーデンの実験ページです。
-
-**Bluesky 🦋:** [highants](https://bsky.app/profile/highants.bsky.social)
+###### 🌱デジタルガーデンの実験ページです。
