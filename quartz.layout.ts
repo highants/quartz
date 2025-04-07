@@ -5,9 +5,10 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [Component.RecentNotes(),],
   footer: Component.Footer({
     links: {
+      "highants(Bluesky)": "https://bsky.app/profile/highants.bsky.social",
       GitHub: "https://github.com/jackyzha0/quartz",
       "Discord Community": "https://discord.gg/cRFFHYye7t",
     },
@@ -38,12 +39,11 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.RecentNotes(),
     Component.Explorer(),
   ],
-  right: [
+  right: [    
     Component.Graph(),
-    Component.DesktopOnly(Component.TableOfContents()),
+    Component.DesktopOnly(Component.TableOfContents()), 
     Component.Backlinks(),
   ],
 }
@@ -63,7 +63,7 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer()
   ],
   right: [],
 }
