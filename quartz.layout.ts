@@ -8,7 +8,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [Component.RecentNotes(),],
   footer: Component.Footer({
     links: {
-      "highants(Bluesky)": "https://bsky.app/profile/highants.bsky.social",
+      "来火(Bluesky)": "https://bsky.app/profile/highants.bsky.social",
       GitHub: "https://github.com/jackyzha0/quartz",
       "Discord Community": "https://discord.gg/cRFFHYye7t",
     },
@@ -21,7 +21,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ConditionalRender({
       component: Component.Breadcrumbs(),
       condition: (page) => page.fileData.slug !== "index",
-    }),
+    }),    
     Component.FeaturedImage(),
     Component.ArticleTitle(),
     Component.ContentMeta(),
