@@ -9,14 +9,13 @@ header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0;
-  gap: 0;
+  margin: 2rem 0;
+  gap: 1.5rem;
 }
 
 header h1 {
   margin: 0;
   flex: auto;
-  font-size: 2.5rem;
 }
 `
 
