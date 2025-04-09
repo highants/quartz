@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { FullSlug, SimpleSlug, resolveRelative } from "../util/path"
+import { FullSlug, SimpleSlug, resolveRelative, simplifySlug } from "../util/path" // simplifySlug をインポート
 import { QuartzPluginData } from "../plugins/vfile"
 import { byDateAndAlphabetical } from "./PageList"
 import style from "./styles/recentNotes.scss"
@@ -21,7 +21,8 @@ const defaultOptions = (cfg: GlobalConfiguration): Options => ({
   limit: 5,
   linkToMore: false,
   showTags: true,
-  filter: () => true,
+  // ここを変更: slug が 'index' でないファイルのみを対象とする
+  filter: (f) => f.slug !== "index",
   sort: byDateAndAlphabetical(cfg),
 })
 
@@ -33,6 +34,7 @@ export default ((userOpts?: Partial<Options>) => {
     cfg,
   }: QuartzComponentProps) => {
     const opts = { ...defaultOptions(cfg), ...userOpts }
+    // simplifySlug を使って末尾のスラッシュを除去する必要がなくなりました
     const pages = allFiles.filter(opts.filter).sort(opts.sort)
     const remaining = Math.max(0, pages.length - opts.limit)
     return (
