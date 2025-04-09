@@ -5,7 +5,7 @@ date: 2025-03-26T15:35:00
 published: 2025-03-26 15:35:00
 lastmod: 2025-04-07 10:36:05
 description: 実験ページ
-socialImage: "null"
+socialImage: 
 author:
   - "[[@highants.bsky.social]]"
 editor: highants
