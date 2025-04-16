@@ -17,3 +17,5 @@ draft: false
 <img src="https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:aqrbayxkmfs4tdhcg3c5mb73/bafkreifg6k33wh3teegpgggfmcwz5fsgwxbw2hlbmfvcecti5yvuvtynae@jpeg" style="display: block; margin: auto;">
 
 🌱  デジタルガーデンの実験サイトです。
+
+[デジタルガーデンを社会化する](20250417005215Q.md)
