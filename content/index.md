@@ -38,3 +38,9 @@ draft: false
 ## 検証や考察
 
 [タグ: 知見](https://highants.github.io/quartz/tags/%E7%9F%A5%E8%A6%8B)
+
+## 生成物語
+
+[いけすのカニ](20250520235642Q.md)
+
+[タグ: 物語](https://highants.github.io/quartz/tags/%E7%89%A9%E8%AA%9E)
