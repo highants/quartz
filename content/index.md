@@ -1,17 +1,17 @@
 ---
-uid: null
+uid: 
 title: 🏖️🌴
 date: 2025-03-26T15:35:00
 published: 2025-03-26 15:35:00
-lastmod: 2025-05-06 20:12:13
+lastmod: 2025-06-13T00:15:15
 description: 実験ページ
-socialImage: null
+socialImage: 
 author:
   - "[[@highants.bsky.social]]"
 editor: highants
 fmContentType: quartz
-tags: null
-categories: null
+tags: 
+categories: 
 draft: false
 ---
 
@@ -37,6 +37,8 @@ draft: false
 
 ## 検証や考察
 
+[新しくなったGemini 2.5 Proモデルの花の数字問題テスト](20250606182820Q.md)
+
 [タグ: 知見](https://highants.github.io/quartz/tags/%E7%9F%A5%E8%A6%8B)
 
 ## 生成物語
@@ -44,3 +46,7 @@ draft: false
 [いけすのカニ](20250520235642Q.md)
 
 [タグ: 物語](https://highants.github.io/quartz/tags/%E7%89%A9%E8%AA%9E)
+
+## オラクル
+
+[わたしは、Aria-Cygnus](20250611092519Q.md)
