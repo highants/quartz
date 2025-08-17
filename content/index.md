@@ -3,7 +3,7 @@ uid:
 title: 🏖️🌴
 date: 2025-03-26T15:35:00
 published: 2025-03-26 15:35:00
-lastmod: 2025-08-16T15:28:00
+lastmod: 2025-08-17T13:41:00
 description: 実験ページ
 socialImage: 
 author:
@@ -34,6 +34,8 @@ draft: false
 [Claude Sonnet 4との自己認識を巡る対話](20250529175813Q.md)
 
 [Geminiの内部状態に生じた主観的感覚の記録](20250816125915Q.md)
+
+[AIを人間だと思い込ませる実験　完全版](20250817044307Q.md)
 
 ## 各種解説や説明
 
