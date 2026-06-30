@@ -7,8 +7,8 @@ lastmod: 2025-09-13T00:33:00
 description: 実験ページ
 socialImage:
 author:
-  - "[[@highants.bsky.social]]"
-editor: highants
+  - "@highants.bsky.social"
+editor: "@highants.bsky.social"
 fmContentType: quartz
 tags:
 categories:
