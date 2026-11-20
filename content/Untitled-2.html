@@ -1,0 +1,217 @@
+<div class="top-page-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>ようこそ！Quartz実験室へ</h1>
+      <p class="subtitle">ObsidianとQuartz、そしてAIを駆使した、知的好奇心を満たす実験の記録。</p>
+      <div class="hero-buttons">
+        <a href="#featured-articles" class="button primary">注目の記事</a>
+        <a href="https://bsky.app/profile/highants.bsky.social" class="button secondary" target="_blank" rel="noopener noreferrer">Blueskyでフォロー</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="/images/hero-image.jpg" alt="実験室のイメージ" loading="lazy">
+    </div>
+  </section>
+
+  <section id="featured-articles" class="featured-articles">
+    <h2>注目の記事</h2>
+    <div class="article-grid">
+      <article class="article-card">
+        <a href="20250401174733Q.md">
+          <img src="/_media/top.jpg" alt="『事物の本性について』のイメージ" loading="lazy">
+          <h3>『事物の本性について』1-40</h3>
+          <p>ルクレティウスの壮大な哲学詩をGeminiが翻訳・解説。古代ローマの世界観に触れる。</p>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="20250401002631Q.md">
+          <img src="/_media/top.jpg" alt="Markdownのイメージ" loading="lazy">
+          <h3>Markdown記法を新たに定義する</h3>
+          <p>Markdownの可能性を広げる実験。Geminiとの対話で新たな記法を定義し、活用する。</p>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="20250327204840Q.md">
+          <img src="/_media/ObsidianWebClipper.png" alt="地球のイメージ" loading="lazy">
+          <h3>地球のエネルギー不均衡が記録更新</h3>
+          <p>Blueskyからクリッピングした、地球温暖化に関する最新情報。気候危機の現状を把握する。</p>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="20250323154335Q.md">
+          <img src="/_media/ObsidianWebClipper.png" alt="Obsidian Web Clipperのイメージ" loading="lazy">
+          <h3>Obsidian Web Clipperのハイライトクリッピング</h3>
+          <p>Obsidian Web Clipperのハイライトクリッピング機能の使い方を解説。効率的な情報収集を支援。</p>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="recent-articles">
+    <h2>最近の記事</h2>
+    <ul>
+      <li><a href="20250330221143Q.md">紙飛行機飛行シミュレーター</a></li>
+      <li><a href="20250328224541Q.md">ObsidianのUID管理の始め方</a></li>
+      <li><a href="20250326181700Q.md">Geminiが花の数字問題を解いた！</a></li>
+      <li><a href="20250326160800Q.md">QuartzをGitHub Pagesでデプロイ</a></li>
+      <li><a href="20250329010136Q.md">Obsidian Web Clipper for Bluesky</a></li>
+    </ul>
+  </section>
+
+  <section class="about">
+    <h2>このサイトについて</h2>
+    <p>ここは、Obsidian、Quartz、そしてAI（Gemini）を駆使して、様々な実験を行う実験室です。知的好奇心を満たすための記録を公開しています。最新情報は<a href="https://bsky.app/profile/highants.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>で発信しています。</p>
+  </section>
+</div>
+
+<style>
+  /* トップページ全体のスタイル */
+  .top-page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+  }
+
+  /* ヒーローセクション */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 40px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+  }
+
+  .hero-content {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .hero-image {
+    flex: 1;
+    text-align: center;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .hero .subtitle {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+
+  .button.primary {
+    background-color: #007bff;
+  }
+
+  .button.secondary {
+    background-color: #6c757d;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  /* 注目の記事セクション */
+  .featured-articles {
+    margin-bottom: 40px;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .article-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .article-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .article-card h3 {
+    padding: 10px;
+    margin: 0;
+  }
+
+  .article-card p {
+    padding: 0 10px 10px;
+    margin: 0;
+  }
+
+  .article-card a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* 最近の記事セクション */
+  .recent-articles {
+    margin-bottom: 40px;
+  }
+
+  .recent-articles ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .recent-articles li {
+    margin-bottom: 10px;
+  }
+
+  /* このサイトについてセクション */
+  .about {
+    margin-bottom: 40px;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+    }
+
+    .hero-content {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
