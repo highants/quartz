@@ -37,7 +37,11 @@ jobs:
             network=host
       - name: Install cosign
         if: github.event_name != 'pull_request'
+<<<<<<< HEAD
         uses: sigstore/cosign-installer@v4.1.2
+=======
+        uses: sigstore/cosign-installer@v4.1.1
+>>>>>>> 4f7fe7e9ba70b42e586adeb77937548f870578b1
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         if: github.event_name != 'pull_request'
