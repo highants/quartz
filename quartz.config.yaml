@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
-  pageTitleSuffix: ""
+  pageTitle: 🏖️🌴
+  pageTitleSuffix: "🏖️🌴"
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: en-US
+  locale: ja-JP
   baseUrl: highants.github.io/quartz
   ignorePatterns:
     - private
@@ -16,8 +16,15 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
+      header: BIZ UDPMincho
+      body:
+        name: Noto Serif JP
+        weights:
+          - 400
+          - 500
+          - 600
+          - 700
+        includeItalic: false
       code: IBM Plex Mono
     colors:
       lightMode:
@@ -217,6 +224,7 @@ plugins:
     enabled: true
     options:
       links:
+        来火(@highants.bsky.social): https://bsky.app/profile/highants.bsky.social
         GitHub: https://github.com/jackyzha0/quartz
         Discord Community: https://discord.gg/cRFFHYye7t
     layout:
