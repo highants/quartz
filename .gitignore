@@ -9,11 +9,6 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
-<<<<<<< HEAD
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
-=======
-frontmatter.json
-.frontmatter
->>>>>>> 4f7fe7e9ba70b42e586adeb77937548f870578b1
